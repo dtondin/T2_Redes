@@ -14,6 +14,7 @@ public class TelaInicial extends javax.swing.JFrame {
     public TelaInicial() {
         initComponents();
         conexao = new Conexao();
+        //conexao.agentes();
     }
 
     /**
@@ -61,27 +62,28 @@ public class TelaInicial extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(353, 353, 353)
-                        .addComponent(jbget))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbMetrica, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtftempo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfIP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfComunidade)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jbget, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtfIP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtfComunidade))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jcbMetrica, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtftempo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,21 +110,14 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jbgetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbgetActionPerformed
         //jtaresultado.setText("");
-        int resultadoIn1 = -1;
-        int resultadoIn2 = -1;
-        int resultadoInFinal = -1;
-
-        int resultadoOut1 = -1;
-        int resultadoOut2 = -1;
-        int resultadoOutFinal = -1;
+        int resultadoIn = -1;
+        int resultadoOut = -1;
         int tempo = -1;
 
         if (!jtftempo.getText().equals("")) {
             tempo = Integer.parseInt(jtftempo.getText());
-        }
-
-        if (jcbMetrica.getSelectedItem().toString().equals("Utilizacao do link")) {
-            String ifInOctes = conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.2.2.1.10");
+        } else if (jcbMetrica.getSelectedItem().toString().equals("Utilizacao do link")) {
+            String ifInOctes = conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.2.2.1.10.");
             String ifOutOctes = conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.2.2.1.16");
             String ifSpeed = conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.2.2.1.5");
 
@@ -130,33 +125,20 @@ public class TelaInicial extends javax.swing.JFrame {
             //jtaresultado.setText("IfOutOctes" + ifOutOctes + "\n");
             //jtaresultado.setText("IfSpeed" + ifSpeed + "\n");
         } else if (jcbMetrica.getSelectedItem().toString().equals("Datagramas IP")) {
-            resultadoIn1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.4.3.0"));
-            resultadoOut1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.4.10.0"));
-
-            resultadoIn2 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.4.3.0"));
-            resultadoOut2 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.4.10.0"));
-
-            resultadoInFinal = resultadoOut2 - resultadoOut1;
-            resultadoOutFinal = resultadoOut2 - resultadoOut1;
+            resultadoIn = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.4.3.0"));
+            resultadoOut = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.4.10.0"));
         } else if (jcbMetrica.getSelectedItem().toString().equals("Pacotes TCP")) {
-            resultadoIn1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.10.0"));
-            resultadoOut1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.11.0"));
-
-            resultadoIn2 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.10.0"));
-            resultadoOut2 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.11.0"));
-
-            resultadoInFinal = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.10.0"));
-            resultadoOutFinal = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.11.0"));
+            resultadoIn = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.10.0"));
+            resultadoOut = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.6.11.0"));
         } else if (jcbMetrica.getSelectedItem().toString().equals("Pacotes UDP")) {
-            resultadoIn1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.7.1.0"));
-            resultadoOut1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.7.4.0"));
+            resultadoIn = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.7.1.0"));
+            resultadoOut = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.7.4.0"));
         } else if (jcbMetrica.getSelectedItem().toString().equals("Pacotes SNMP")) {
-            resultadoIn1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.11.1.0"));
-            resultadoOut1 = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.11.2.0"));
+            resultadoIn = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.11.1.0"));
+            resultadoOut = Integer.parseInt(conexao.get(jtfIP.getText(), jtfComunidade.getText(), ".1.3.6.1.2.1.11.2.0"));
         }
-
         //jtaresultado.setText(resultadoIn + "\n" + resultadoOut);
-        conexao.atualizaGrafico(jcbMetrica.getSelectedItem().toString(), tempo, resultadoInFinal, tempo, resultadoOutFinal);
+        conexao.atualizaGrafico(jcbMetrica.getSelectedItem().toString(), tempo, resultadoIn, tempo, resultadoOut);
     }//GEN-LAST:event_jbgetActionPerformed
 
     /**

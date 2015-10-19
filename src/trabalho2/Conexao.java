@@ -1,6 +1,7 @@
 package trabalho2;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 import org.jfree.ui.RefineryUtilities;
 import org.snmp4j.CommunityTarget;
@@ -83,6 +84,29 @@ public class Conexao {
         chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
+    }
+
+    public ArrayList<String> descoberta() {
+        String ip;
+        ArrayList<String> lista = new ArrayList<String>();
+        int lastOctes = 150;
+
+        while (lastOctes < 239) {
+            ip = "10.32.143." + Integer.toString(lastOctes) + "/161";
+            lista.add(ip);
+            lastOctes++;
+        }
+        return lista;
+    }
+
+    public void agentes() {
+        ArrayList<String> ips = descoberta();
+
+        for (String ip : ips) {
+            if (!get(ip, "public", ".1.3.6.1.2.1.4.3.0").equals("Error: Response PDU is null.\n")) {
+                System.out.println(ip);
+            }
+        }
     }
 
 }

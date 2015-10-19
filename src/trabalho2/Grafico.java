@@ -34,7 +34,7 @@ public class Grafico extends ApplicationFrame {
         chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
         final XYPlot plot = xylineChart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.RED);
+        renderer.setSeriesPaint(0, Color.BLUE);
         renderer.setSeriesPaint(1, Color.GREEN);
         renderer.setSeriesStroke(0, new BasicStroke(4.0f));
         renderer.setSeriesStroke(1, new BasicStroke(4.0f));
