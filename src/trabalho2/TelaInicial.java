@@ -151,8 +151,7 @@ public class TelaInicial extends javax.swing.JFrame {
         if (camposOk()) {
             jlInfo.setVisible(false);
 
-            String tempoStr = jtftempo.getText();
-            int tempoNum = Integer.parseInt(tempoStr);
+            int tempo = Integer.parseInt(jtftempo.getText());
             String comunidade = jtfComunidade.getText();
             String metrica = jcbMetrica.getSelectedItem().toString();
             String ip = "";
@@ -163,7 +162,7 @@ public class TelaInicial extends javax.swing.JFrame {
             } else {
                 ip = jcbIps.getSelectedItem().toString();
             }
-            conexao.chamaAgendador(ip, comunidade, metrica, indice, tempoStr);
+            conexao.chamaAgendador(ip, comunidade, metrica, indice, tempo);
         } else {
             jlInfo.setVisible(true);
         }
