@@ -2,7 +2,7 @@ package trabalho2;
 
 /**
  *
- * @author Douglas, Patricia, Priscila
+ * @author Douglas, Patricia, Priscila, Tamires
  */
 public class Main {
 

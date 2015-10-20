@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Douglas, Patricia, Priscila
+ * @author Douglas, Patricia, Priscila, Tamires
  */
 public class TelaInicial extends javax.swing.JFrame {
 
@@ -151,7 +151,7 @@ public class TelaInicial extends javax.swing.JFrame {
         if (camposOk()) {
             jlInfo.setVisible(false);
 
-            int tempo = Integer.parseInt(jtftempo.getText());
+            int tempo = Integer.parseInt(jtftempo.getText()) * 1000;
             String comunidade = jtfComunidade.getText();
             String metrica = jcbMetrica.getSelectedItem().toString();
             String ip = "";

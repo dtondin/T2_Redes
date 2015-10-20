@@ -19,11 +19,13 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 /**
  *
- * @author Douglas, Patricia, Priscila
+ * @author Douglas, Patricia, Priscila, Tamires
  */
 public class Conexao {
 
     private ArrayList<String> listaAgentes = new ArrayList<String>();
+    private ArrayList<PontoGrafico> lista = new ArrayList<PontoGrafico>();
+    private Grafico chart;
 
     public String get(String ip, String comunidade, String OID) {
         String mensagem = "";
@@ -82,10 +84,9 @@ public class Conexao {
     }
 
     public void atualizaGrafico(String titulo, int inX, int inY, int outX, int outY) {
-        Grafico chart = new Grafico("Gráfico", titulo, inX, inY, outX, outY);
-        chart.pack();
-        RefineryUtilities.centerFrameOnScreen(chart);
-        chart.setVisible(true);
+        lista.add(new PontoGrafico(inX, inY, outX, outY));
+        
+        chart = new Grafico("Gráfico", titulo, lista);
     }
 
     public ArrayList<String> descoberta() {

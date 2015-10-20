@@ -2,7 +2,7 @@ package trabalho2;
 
 /**
  *
- * @author Douglas, Patricia, Priscila
+ * @author Douglas, Patricia, Priscila, Tamires
  */
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,13 +27,10 @@ public class Agendador {
         final Timer t = new Timer();
         t.schedule(new TimerTask() {
             private Conexao conexao = new Conexao();
+
             @Override
             public void run() {
                 executaGet(ip, comunidade, metrica, indice, tempo);
-//                new Execucoes().tabuada(count);
-//                if (count == 5) {
-//                    t.cancel();
-//                }
             }
 
             private void executaGet(String ip, String comunidade, String metrica, String indice, int tempo) {
@@ -62,7 +59,7 @@ public class Agendador {
                     resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.11.2.0"));
                 }
 
-                conexao.atualizaGrafico(metrica, tempo, resultadoIn, tempo, resultadoOut);
+                conexao.atualizaGrafico(metrica, tempo/1000, resultadoIn, tempo/1000, resultadoOut);
                 tempo = tempo + tempo;
             }
 
