@@ -3,7 +3,6 @@ package trabalho2;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
-import org.jfree.ui.RefineryUtilities;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
@@ -26,6 +25,10 @@ public class Conexao {
     private ArrayList<String> listaAgentes = new ArrayList<String>();
     private ArrayList<PontoGrafico> lista = new ArrayList<PontoGrafico>();
     private Grafico chart;
+    private int anteriorIn = -1;
+    private int anteriorOut = -1;
+    private int atualIn = -1;
+    private int atualOut = -1;
 
     public String get(String ip, String comunidade, String OID) {
         String mensagem = "";
@@ -84,8 +87,19 @@ public class Conexao {
     }
 
     public void atualizaGrafico(String titulo, int inX, int inY, int outX, int outY) {
-        lista.add(new PontoGrafico(inX, inY, outX, outY));
-        
+        if (anteriorIn != -1 && anteriorOut != -1) {
+            atualIn = inY;
+            atualOut = outY;
+
+            lista.add(new PontoGrafico(inX, (atualIn - anteriorIn), outX, (atualOut - anteriorOut)));
+
+            anteriorIn = atualIn;
+            anteriorOut = atualOut;
+        } else {
+            anteriorIn = inY;
+            anteriorOut = outY;
+        }
+
         chart = new Grafico("Gráfico", titulo, lista);
     }
 
