@@ -36,7 +36,6 @@ public class Agendador {
             }
 
             private void executaGet() {
-                tempo = tempo;
                 int resultadoIn = -1;
                 int resultadoOut = -1;
 
@@ -65,7 +64,7 @@ public class Agendador {
                 tempo += count;
             }
 
-        }, tempo, tempo);
+        }, 0, tempo);
     }
 
 }
