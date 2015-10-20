@@ -14,6 +14,7 @@ public class Agendador {
     private String metrica;
     private String indice;
     private int tempo;
+    private int count;
 
     public Agendador(String ip, String comunidade, String metrica, String indice, int tempo) {
         this.ip = ip;
@@ -21,6 +22,7 @@ public class Agendador {
         this.metrica = metrica;
         this.indice = indice;
         this.tempo = tempo;
+        count = tempo;
     }
 
     public void agendamento() {
@@ -30,10 +32,10 @@ public class Agendador {
 
             @Override
             public void run() {
-                executaGet(ip, comunidade, metrica, indice, tempo);
+                executaGet();
             }
 
-            private void executaGet(String ip, String comunidade, String metrica, String indice, int tempo) {
+            private void executaGet() {
                 tempo = tempo;
                 int resultadoIn = -1;
                 int resultadoOut = -1;
@@ -59,8 +61,8 @@ public class Agendador {
                     resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.11.2.0"));
                 }
 
-                conexao.atualizaGrafico(metrica, tempo/1000, resultadoIn, tempo/1000, resultadoOut);
-                tempo = tempo + tempo;
+                conexao.atualizaGrafico(metrica, tempo / 1000, resultadoIn, tempo / 1000, resultadoOut);
+                tempo += count;
             }
 
         }, tempo, tempo);
