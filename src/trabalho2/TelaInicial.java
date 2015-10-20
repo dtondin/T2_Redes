@@ -16,8 +16,10 @@ public class TelaInicial extends javax.swing.JFrame {
     public TelaInicial() {
         initComponents();
         jlInfo.setVisible(false);
+        jlIndice.setVisible(false);
+        jtfIndice.setVisible(false);
         conexao = new Conexao();
-        conexao.agentes();
+        //conexao.agentes();
         inicializaComboIpsDestino(conexao.getListaAgentes());
     }
 
@@ -41,6 +43,8 @@ public class TelaInicial extends javax.swing.JFrame {
         jtfComunidade = new javax.swing.JTextField();
         jcbIps = new javax.swing.JComboBox();
         jlInfo = new javax.swing.JLabel();
+        jlIndice = new javax.swing.JLabel();
+        jtfIndice = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SNMP");
@@ -57,14 +61,26 @@ public class TelaInicial extends javax.swing.JFrame {
         });
 
         jcbMetrica.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione item", "Utilizacao do link", "Datagramas IP", "Pacotes TCP", "Pacotes UDP", "Pacotes SNMP" }));
+        jcbMetrica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbMetricaActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Métrica ");
 
         jLabel1.setText("IP");
 
         jcbIps.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbIps.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbIpsActionPerformed(evt);
+            }
+        });
 
         jlInfo.setText("Informações não foram buscadas! Tente novamente!");
+
+        jlIndice.setText("Indice");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,34 +89,37 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbMetrica, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jlInfo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                                 .addComponent(jbget, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jcbIps, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jtfIP, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                                .addGap(18, 48, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jtftempo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfComunidade, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap())
+                                        .addComponent(jtfComunidade, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbMetrica, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlIndice)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfIndice, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,19 +130,21 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(jtfIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jtfComunidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbIps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jtftempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcbMetrica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jcbMetrica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbget)
-                    .addComponent(jlInfo))
+                    .addComponent(jlIndice)
+                    .addComponent(jtfIndice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlInfo)
+                    .addComponent(jbget))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -133,22 +154,24 @@ public class TelaInicial extends javax.swing.JFrame {
     private void jbgetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbgetActionPerformed
         if (camposOk()) {
             jlInfo.setVisible(false);
-            
+
             int resultadoIn = -1;
             int resultadoOut = -1;
             int tempo = Integer.parseInt(jtftempo.getText());
             String comunidade = jtfComunidade.getText();
             String metrica = jcbMetrica.getSelectedItem().toString();
             String ip = jtfIP.getText();
+            String indice = "";
 
             if (metrica.equals("Utilizacao do link")) {
-                String ifInOctes = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.10.");
-                String ifOutOctes = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.16");
-                String ifSpeed = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.5");
+                indice = jtfIndice.getText();
 
-                //jtaresultado.setText("IfInOctes" + ifInOctes + "\n");
-                //jtaresultado.setText("IfOutOctes" + ifOutOctes + "\n");
-                //jtaresultado.setText("IfSpeed" + ifSpeed + "\n");
+                String ifInOctes = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.10." + indice);
+                String ifOutOctes = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.16." + indice);
+                String ifSpeed = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.5." + indice);
+
+                resultadoIn = Integer.parseInt(ifInOctes);
+                resultadoOut = Integer.parseInt(ifOutOctes);
             } else if (metrica.equals("Datagramas IP")) {
                 resultadoIn = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.4.3.0"));
                 resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.4.10.0"));
@@ -162,12 +185,25 @@ public class TelaInicial extends javax.swing.JFrame {
                 resultadoIn = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.11.1.0"));
                 resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.11.2.0"));
             }
-            //jtaresultado.setText(resultadoIn + "\n" + resultadoOut);
             conexao.atualizaGrafico(jcbMetrica.getSelectedItem().toString(), tempo, resultadoIn, tempo, resultadoOut);
         } else {
             jlInfo.setVisible(true);
         }
     }//GEN-LAST:event_jbgetActionPerformed
+
+    private void jcbIpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbIpsActionPerformed
+
+    }//GEN-LAST:event_jcbIpsActionPerformed
+
+    private void jcbMetricaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMetricaActionPerformed
+        if (jcbMetrica.getSelectedItem().toString().equals("Utilizacao do link")) {
+            jlIndice.setVisible(true);
+            jtfIndice.setVisible(true);
+        } else {
+            jlIndice.setVisible(false);
+            jtfIndice.setVisible(false);
+        }
+    }//GEN-LAST:event_jcbMetricaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,9 +256,11 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton jbget;
     private javax.swing.JComboBox jcbIps;
     private javax.swing.JComboBox jcbMetrica;
+    private javax.swing.JLabel jlIndice;
     private javax.swing.JLabel jlInfo;
     private javax.swing.JTextField jtfComunidade;
     private javax.swing.JTextField jtfIP;
+    private javax.swing.JTextField jtfIndice;
     private javax.swing.JTextField jtftempo;
     // End of variables declaration//GEN-END:variables
 
@@ -230,7 +268,11 @@ public class TelaInicial extends javax.swing.JFrame {
         if (!jtftempo.getText().equals("")
                 && (!(jtfIP.getText().equals("")) || !jcbIps.getSelectedItem().equals("Selecione IP"))
                 && !jcbMetrica.getSelectedItem().toString().equals("Selecione item")) {
-            return true;
+            if (jcbMetrica.getSelectedItem().toString().equals("Utilizacao do link") && !jtfIndice.getText().equals("")) {
+                return true;
+            } else {
+                return false;
+            }
         }
         return false;
     }
