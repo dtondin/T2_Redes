@@ -23,6 +23,8 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
  */
 public class Conexao {
 
+    ArrayList<String> listaAgentes = new ArrayList<String>();
+
     public String get(String ip, String comunidade, String OID) {
         String mensagem = "";
         try {
@@ -104,9 +106,15 @@ public class Conexao {
 
         for (String ip : ips) {
             if (!get(ip, "public", ".1.3.6.1.2.1.4.3.0").equals("Error: Response PDU is null.\n")) {
-                System.out.println(ip);
+                String novoIp = ip.split("/")[0];
+                listaAgentes.add(novoIp);
+                System.out.println(novoIp);
             }
         }
+    }
+
+    public ArrayList<String> getListaAgentes() {
+        return listaAgentes;
     }
 
 }

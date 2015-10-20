@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trabalho2;
 
 /**
  *
- * @author labredes
+ * @author Douglas, Patricia, Priscila
  */
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
