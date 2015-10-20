@@ -14,24 +14,20 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-public class QuartzApp {
+public class Agendador {
 
-    /**
-     * @param args
-     */
     //http://www.devmedia.com.br/agendando-tarefas-em-java-com-quartz-scheduler-e-timertask/32466
-    public static void main(String[] args) {
+    public void agendamento(String ip, String comunidade, String metrica, String indice, String tempo) {
         SchedulerFactory shedFact = new StdSchedulerFactory();
         try {
             Scheduler scheduler = shedFact.getScheduler();
             scheduler.start();
-            JobDetail job = JobBuilder.newJob(ValidadorJob.class)
-                    .withIdentity("validadorJOB", "grupo01")
+            JobDetail job = JobBuilder.newJob(ExecutaAgendamento.class)
+                    .withIdentity("agendamentoJOB", "grupo01")
                     .build();
             Trigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity("validadorTRIGGER", "grupo01")
-                    
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0/" + tempo + " * * * * ?"))
                     .build();
             scheduler.scheduleJob(job, trigger);
         } catch (SchedulerException e) {

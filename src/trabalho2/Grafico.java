@@ -18,7 +18,7 @@ import org.jfree.ui.ApplicationFrame;
  * @author Douglas, Patricia, Priscila
  */
 public class Grafico extends ApplicationFrame {
-
+    
     public Grafico(String titulo, String tituloGrafico, int inX, int inY, int outX, int outY) {
         super(titulo);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

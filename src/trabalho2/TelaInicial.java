@@ -21,6 +21,7 @@ public class TelaInicial extends javax.swing.JFrame {
         conexao = new Conexao();
         //conexao.agentes();
         inicializaComboIpsDestino(conexao.getListaAgentes());
+
     }
 
     /**
@@ -72,11 +73,6 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel1.setText("IP");
 
         jcbIps.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jcbIps.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbIpsActionPerformed(evt);
-            }
-        });
 
         jlInfo.setText("Informações não foram buscadas! Tente novamente!");
 
@@ -155,45 +151,23 @@ public class TelaInicial extends javax.swing.JFrame {
         if (camposOk()) {
             jlInfo.setVisible(false);
 
-            int resultadoIn = -1;
-            int resultadoOut = -1;
-            int tempo = Integer.parseInt(jtftempo.getText());
+            String tempoStr = jtftempo.getText();
+            int tempoNum = Integer.parseInt(tempoStr);
             String comunidade = jtfComunidade.getText();
             String metrica = jcbMetrica.getSelectedItem().toString();
-            String ip = jtfIP.getText();
+            String ip = "";
             String indice = "";
 
-            if (metrica.equals("Utilizacao do link")) {
-                indice = jtfIndice.getText();
-
-                String ifInOctes = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.10." + indice);
-                String ifOutOctes = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.16." + indice);
-                String ifSpeed = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.5." + indice);
-
-                resultadoIn = Integer.parseInt(ifInOctes);
-                resultadoOut = Integer.parseInt(ifOutOctes);
-            } else if (metrica.equals("Datagramas IP")) {
-                resultadoIn = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.4.3.0"));
-                resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.4.10.0"));
-            } else if (metrica.equals("Pacotes TCP")) {
-                resultadoIn = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.6.10.0"));
-                resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.6.11.0"));
-            } else if (metrica.equals("Pacotes UDP")) {
-                resultadoIn = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.7.1.0"));
-                resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.7.4.0"));
-            } else if (metrica.equals("Pacotes SNMP")) {
-                resultadoIn = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.11.1.0"));
-                resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.11.2.0"));
+            if (!jtfIP.getText().equals("")) {
+                ip = jtfIP.getText();
+            } else {
+                ip = jcbIps.getSelectedItem().toString();
             }
-            conexao.atualizaGrafico(jcbMetrica.getSelectedItem().toString(), tempo, resultadoIn, tempo, resultadoOut);
+            conexao.chamaAgendador(ip, comunidade, metrica, indice, tempoStr);
         } else {
             jlInfo.setVisible(true);
         }
     }//GEN-LAST:event_jbgetActionPerformed
-
-    private void jcbIpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbIpsActionPerformed
-
-    }//GEN-LAST:event_jcbIpsActionPerformed
 
     private void jcbMetricaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMetricaActionPerformed
         if (jcbMetrica.getSelectedItem().toString().equals("Utilizacao do link")) {
@@ -268,10 +242,10 @@ public class TelaInicial extends javax.swing.JFrame {
         if (!jtftempo.getText().equals("")
                 && (!(jtfIP.getText().equals("")) || !jcbIps.getSelectedItem().equals("Selecione IP"))
                 && !jcbMetrica.getSelectedItem().toString().equals("Selecione item")) {
-            if (jcbMetrica.getSelectedItem().toString().equals("Utilizacao do link") && !jtfIndice.getText().equals("")) {
-                return true;
-            } else {
+            if (jcbMetrica.getSelectedItem().toString().equals("Utilizacao do link") && jtfIndice.getText().equals("")) {
                 return false;
+            } else {
+                return true;
             }
         }
         return false;
