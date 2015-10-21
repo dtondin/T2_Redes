@@ -49,20 +49,24 @@ public class Agendador {
 
             private void executaGet() {
                 if (metrica.equals("Utilizacao do link")) {
-                    String get = conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.10." + indice);
-                    ifInOctesPosterior = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.10." + indice));
-                    ifOutOctesPosterior = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.16." + indice));
-                    ifSpeed = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.5." + indice));
+                    if (ifInOctesAnterior != 0 && ifOutOctesAnterior != 0) {
+                        ifInOctesPosterior = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.10." + indice));
+                        ifOutOctesPosterior = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.16." + indice));
+                        ifSpeed = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.5." + indice));
 
-                    int taxaBytes = (ifInOctesPosterior - ifInOctesAnterior) + (ifOutOctesPosterior - ifOutOctesAnterior);
-                    int taxaBytesSeg = taxaBytes / (tempo);
+                        int taxaBytes = (ifInOctesPosterior - ifInOctesAnterior) + (ifOutOctesPosterior - ifOutOctesAnterior);
+                        float taxaBytesSeg = (float) taxaBytes / (tempo);
 
-                    ifOctesResultado = (float) (taxaBytesSeg * 8) / ifSpeed;
+                        ifOctesResultado = (float) (taxaBytesSeg * 8) / ifSpeed;
 
-                    ifInOctesAnterior = ifInOctesPosterior;
-                    ifOutOctesAnterior = ifOutOctesPosterior;
+                        ifInOctesAnterior = ifInOctesPosterior;
+                        ifOutOctesAnterior = ifOutOctesPosterior;
 
-                    conexao.atualizaGrafico(metrica, ((tempo - count) / 1000), ifOctesResultado);
+                        conexao.atualizaGrafico(metrica, ((tempo - count) / 1000), ifOctesResultado);
+                    } else {
+                        ifInOctesAnterior = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.10." + indice));
+                        ifOutOctesAnterior = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.2.2.1.16." + indice));
+                    }
                 } else {
                     if (metrica.equals("Datagramas IP")) {
                         resultadoIn = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.4.3.0"));
