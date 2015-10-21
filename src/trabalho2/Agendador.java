@@ -37,7 +37,7 @@ public class Agendador {
             private int ifOutOctesPosterior = 0;
 
             private int ifSpeed = 0;
-            private double ifOctesResultado = 0;
+            private float ifOctesResultado = 0;
 
             int resultadoIn = 0;
             int resultadoOut = 0;
@@ -57,7 +57,7 @@ public class Agendador {
                     int taxaBytes = (ifInOctesPosterior - ifInOctesAnterior) + (ifOutOctesPosterior - ifOutOctesAnterior);
                     int taxaBytesSeg = taxaBytes / (tempo);
 
-                    ifOctesResultado = (taxaBytesSeg * 8) / ifSpeed;
+                    ifOctesResultado = (float) (taxaBytesSeg * 8) / ifSpeed;
 
                     ifInOctesAnterior = ifInOctesPosterior;
                     ifOutOctesAnterior = ifOutOctesPosterior;

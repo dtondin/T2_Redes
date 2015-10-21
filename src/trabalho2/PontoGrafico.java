@@ -6,21 +6,21 @@ package trabalho2;
  */
 public class PontoGrafico {
 
-    private double inX;
-    private double inY;
-    private double outX;
-    private double outY;
-    private double x;
-    private double y;
+    private float inX;
+    private float inY;
+    private float outX;
+    private float outY;
+    private float x;
+    private float y;
 
-    public PontoGrafico(double inX, double inY, double outX, double outY) {
+    public PontoGrafico(float inX, float inY, float outX, float outY) {
         this.inX = inX;
         this.inY = inY;
         this.outX = outX;
         this.outY = outY;
     }
 
-    public PontoGrafico(int x, double y) {
+    public PontoGrafico(int x, float y) {
         this.inX = -1;
         this.inY = -1;
         this.outX = -1;
@@ -29,27 +29,27 @@ public class PontoGrafico {
         this.y = y;
     }
 
-    public double getInX() {
+    public float getInX() {
         return inX;
     }
 
-    public double getInY() {
+    public float getInY() {
         return inY;
     }
 
-    public double getOutX() {
+    public float getOutX() {
         return outX;
     }
 
-    public double getOutY() {
+    public float getOutY() {
         return outY;
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
