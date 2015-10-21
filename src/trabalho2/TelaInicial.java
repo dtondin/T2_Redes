@@ -162,6 +162,11 @@ public class TelaInicial extends javax.swing.JFrame {
             } else {
                 ip = jcbIps.getSelectedItem().toString();
             }
+
+            if (metrica.equals("Utilizacao do link")) {
+                indice = jtfIndice.getText();
+            }
+
             conexao.chamaAgendador(ip, comunidade, metrica, indice, tempo);
         } else {
             jlInfo.setVisible(true);

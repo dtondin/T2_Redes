@@ -27,8 +27,12 @@ public class Conexao {
     private Grafico chart = new Grafico();
     private int anteriorIn = -1;
     private int anteriorOut = -1;
+
     private int atualIn = -1;
     private int atualOut = -1;
+
+    private double anteriorY = -1;
+    private double atualY = -1;
 
     public String get(String ip, String comunidade, String OID) {
         String mensagem = "";
@@ -101,6 +105,20 @@ public class Conexao {
         }
 
         chart.criaGrafico("Gráfico", titulo, lista);
+    }
+
+    public void atualizaGrafico(String titulo, int x, double y) {
+        if (anteriorY != -1) {
+            atualY = y;
+
+            lista.add(new PontoGrafico(x, (atualY - anteriorY)));
+
+            anteriorY = atualY;
+        } else {
+            anteriorY = x;
+        }
+
+        chart.criaGrafico2("Gráfico", titulo, lista);
     }
 
     public ArrayList<String> descoberta() {
