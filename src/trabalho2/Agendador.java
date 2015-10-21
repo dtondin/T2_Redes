@@ -60,7 +60,7 @@ public class Agendador {
                     resultadoOut = Integer.parseInt(conexao.get(ip, comunidade, ".1.3.6.1.2.1.11.2.0"));
                 }
 
-                conexao.atualizaGrafico(metrica, tempo / 1000, resultadoIn, tempo / 1000, resultadoOut);
+                conexao.atualizaGrafico(metrica, ((tempo-count) / 1000), resultadoIn, ((tempo-count) / 1000), resultadoOut);
                 tempo += count;
             }
 
