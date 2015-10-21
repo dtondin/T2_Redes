@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JRootPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -21,7 +22,10 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class Grafico {
 
-    public Grafico(String titulo, String tituloGrafico, ArrayList<PontoGrafico> lista) {
+    ChartPanel chartPanel = null;
+    JFrame frame = null;
+
+    public void criaGrafico(String titulo, String tituloGrafico, ArrayList<PontoGrafico> lista) {
         JFreeChart xylineChart = ChartFactory.createXYLineChart(
                 tituloGrafico,
                 "Tempo",
@@ -30,7 +34,12 @@ public class Grafico {
                 PlotOrientation.VERTICAL,
                 true, true, false);
 
-        ChartPanel chartPanel = new ChartPanel(xylineChart);
+        if (chartPanel == null) {
+            chartPanel = new ChartPanel(xylineChart);
+        } else {
+            chartPanel.setChart(xylineChart);
+        }
+
         chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
         final XYPlot plot = xylineChart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
@@ -40,14 +49,19 @@ public class Grafico {
         renderer.setSeriesStroke(1, new BasicStroke(4.0f));
         plot.setRenderer(renderer);
 
-        JFrame f = new JFrame(titulo);
-        f.setTitle(tituloGrafico);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setLayout(new BorderLayout(0, 5));
-        f.add(chartPanel, BorderLayout.CENTER);
-        f.pack();
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
+        if (frame == null) {
+            frame = new JFrame(titulo);
+            frame.setTitle(tituloGrafico);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setLayout(new BorderLayout(0, 5));
+            frame.add(chartPanel, BorderLayout.CENTER);
+        } else {
+            frame.add(chartPanel, BorderLayout.CENTER);
+        }
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private XYDataset createDataset(ArrayList<PontoGrafico> lista) {

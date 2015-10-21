@@ -24,7 +24,7 @@ public class Conexao {
 
     private ArrayList<String> listaAgentes = new ArrayList<String>();
     private ArrayList<PontoGrafico> lista = new ArrayList<PontoGrafico>();
-    private Grafico chart;
+    private Grafico chart = new Grafico();
     private int anteriorIn = -1;
     private int anteriorOut = -1;
     private int atualIn = -1;
@@ -100,7 +100,7 @@ public class Conexao {
             anteriorOut = outY;
         }
 
-        chart = new Grafico("Gráfico", titulo, lista);
+        chart.criaGrafico("Gráfico", titulo, lista);
     }
 
     public ArrayList<String> descoberta() {
